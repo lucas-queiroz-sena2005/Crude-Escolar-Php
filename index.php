@@ -1,50 +1,54 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: login.php');
+    exit;
+}
+
+// Dados fictícios para exemplo de alunos
+$alunos = [
+    ['ra' => '12345', 'nome' => 'João Silva', 'data_nascimento' => '2000-01-01', 'cpf' => '123.456.789-00'],
+    ['ra' => '67890', 'nome' => 'Maria Oliveira', 'data_nascimento' => '1998-03-25', 'cpf' => '987.654.321-00']
+];
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CRUD Escolar</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Alunos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="#">CRUD Escolar</a>
+    <div class="container mt-5">
+        <h2>Área Administrativa</h2>
+        <a href="logout.php" class="btn btn-danger mb-3">Sair</a>
+        <a href="cadastro.php" class="btn btn-success mb-3">Cadastrar Novo Aluno</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RA</th>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>CPF</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($alunos as $aluno) : ?>
+                    <tr>
+                        <td><?php echo $aluno['ra']; ?></td>
+                        <td><?php echo $aluno['nome']; ?></td>
+                        <td><?php echo $aluno['data_nascimento']; ?></td>
+                        <td><?php echo $aluno['cpf']; ?></td>
+                        <td>
+                            <a href="editar.php?ra=<?php echo $aluno['ra']; ?>" class="btn btn-warning">Editar</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
-  </nav>
-
-  <div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Lista de Registros</h2>
-      <a href="create.php" class="btn btn-success">+ Adicionar Novo</a>
-    </div>
-
-    <!-- Tabela de dados -->
-    <table class="table table-striped">
-      <thead class="table-dark">
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Email</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Exemplo de item (depois substitua por PHP loop) -->
-        <tr>
-          <td>1</td>
-          <td>João Silva</td>
-          <td>joao@email.com</td>
-          <td>
-            <a href="edit.php?id=1" class="btn btn-sm btn-warning">Editar</a>
-            <a href="delete.php?id=1" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
-          </td>
-        </tr>
-        <!-- Fim do exemplo -->
-      </tbody>
-    </table>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
