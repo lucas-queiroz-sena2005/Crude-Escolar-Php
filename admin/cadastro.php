@@ -9,9 +9,32 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
-    header('Location: ../../public/index.php');
+    header('Location: ../public/index.php');
     exit;
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+   
+    $ra = $_POST['ra'];
+    $cpf = $_POST['cpf'];
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $data_nascimento = $_POST['data_nascimento'];
+    $curso = $_POST['curso'];
+
+    $sql = "INSERT INTO aluno (ra, cpf, nome, email, data_nascimento, curso) VALUES ('$ra', '$cpf', '$nome', '$email', '$data_nascimento', '$curso')";
+
+    if (mysqli_query($conn, $sql)) {
+        echo "Cadastro realizado com sucesso!";
+    } else {
+        echo "Erro: " . mysqli_error($conn);
+    }
+
+    // Redirecionar após cadastro
+    header('Location: ../../public/index.php');
+    exit(); 
+
+} 
 
 ?>
 
@@ -28,7 +51,7 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
         
         <h2>Cadastrar Novo Aluno</h2>
         <a href="admin.php" class="btn btn-primary">Voltar</a>
-        <form method="POST" action="crud/create_student.php">
+        <form method="POST">
 
             <!-- RA -->
             <div class="mb-3">

@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
-    header('Location: ../../public/index.php');
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "UPDATE aluno SET nome = '$nome', data_nascimento = '$data_nascimento', cpf = '$cpf' WHERE ra = '$ra'";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: index.php');
+        header('Location: ../public/index.php');
         exit;
     } else {
         echo "Erro ao atualizar: " . mysqli_error($conn);

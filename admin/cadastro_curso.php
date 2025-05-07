@@ -4,7 +4,12 @@ include_once '../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../public/login.php');
+    exit;
+}
+
+if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -14,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO curso (nome) VALUES ('$nome')";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: cursos.php');
+        header('Location: ../public/cursos.php');
         exit;
     } else {
         echo "Erro ao cadastrar curso: " . mysqli_error($conn);
@@ -34,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="container mt-5">
         <h2>Cadastrar Novo Curso</h2>
-        <a href="cursos.php" class="btn btn-primary">Voltar</a>
+        <a href="../public/cursos.php" class="btn btn-primary">Voltar</a>
         <form method="POST">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Curso</label>

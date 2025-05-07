@@ -21,7 +21,12 @@ if (!isset($_SESSION['usuario'])) {
 <body>
     <div class="container mt-5">
         <h2>Cursos Cadastrados</h2>
-        <a href="cadastro_curso.php" class="btn btn-success mb-3">Cadastrar Novo Curso</a>
+
+        <?php
+            if($_SESSION['admin'] == true) {
+                echo '<a href="../admin/cadastro_curso.php" class="btn btn-success mb-3">Cadastrar Novo Curso</a>';
+            }
+        ?>
         
         <a href="index.php" class="btn btn-primary mb-3">Voltar para Alunos</a>
 
@@ -36,10 +41,12 @@ if (!isset($_SESSION['usuario'])) {
                     echo "<tr>";
                     echo "<td>" . $row['id'] . "</td>";
                     echo "<td>" . $row['nome'] . "</td>";
-                    echo "<td>
-                            <a href='editar_curso.php?id=" . $row['id'] . "' class='btn btn-warning'>Editar</a>
-                            <a href='remover_curso.php?id=" . $row['id'] . "' class='btn btn-danger'>Excluir</a>
-                          </td>";
+                    if($_SESSION['admin'] == true) {
+                        echo "<td>
+                            <a href='../admin/editar_curso.php?id=" . $row['id'] . "' class='btn btn-warning'>Editar</a>
+                            <a href='../admin/remover_curso.php?id=" . $row['id'] . "' class='btn btn-danger'>Excluir</a>
+                        </td>";
+                    }
                     echo "</tr>";
                 }
                 echo "</tbody></table>";

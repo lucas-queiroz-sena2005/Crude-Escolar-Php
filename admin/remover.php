@@ -9,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
-    header('Location: ../../public/index.php');
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ if (isset($_GET['ra'])) {
     $sql = "DELETE FROM aluno WHERE ra = '$ra'";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: index.php'); 
+        header('Location: ../public/index.php'); 
         exit;
     } else {
         echo "Erro ao excluir aluno: " . mysqli_error($conn);

@@ -20,10 +20,10 @@ if (isset($_GET['id'])) {
     mysqli_stmt_bind_param($stmt, 'i', $curso_id);
     
     if (mysqli_stmt_execute($stmt)) {
-        header('Location: cursos.php?msg=Curso excluído com sucesso');
+        header('Location: ../public/cursos.php?msg=Curso excluído com sucesso');
     } else {
-        header('Location: cursos.php?msg=Erro ao excluir o curso');
+        header('Location: ../public/cursos.php?msg=Erro ao excluir o curso');
     }
 } else {
-    header('Location: cursos.php?msg=Curso não encontrado');
+    header('Location: ../public/cursos.php?msg=Curso não encontrado');
 }

@@ -37,7 +37,7 @@ if (!isset($_SESSION['usuario'])) {
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {
                 echo "<table class='table mt-3'>";
-                echo "<thead><tr><th>RA</th><th>CPF</th><th>Nome</th><th>Email</th><th>Data de Nascimento</th><th>Curso</th></tr></thead>";
+                echo "<thead><tr><th>RA</th><th>CPF</th><th>Nome</th><th>Email</th><th>Data de Nascimento</th><th>Curso</th><th>Ações</th></tr></thead>";
                 echo "<tbody>";
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo "<tr>";
@@ -47,10 +47,12 @@ if (!isset($_SESSION['usuario'])) {
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['data_nascimento'] . "</td>";
                     echo "<td>" . $row['curso'] . "</td>";
-                    echo "<td>";
-                    echo "<a href='editar.php?ra=" . $row['ra'] . "' class='btn btn-warning btn-sm'>Editar</a> ";
-                    echo "<a href='remover.php?ra=" . $row['ra'] . "' class='btn btn-danger btn-sm'>Excluir</a>";
-                    echo "</td>";
+                    if($_SESSION['admin'] == true) {
+                        echo "<td>";
+                            echo "<a href='../admin/editar.php?ra=" . $row['ra'] . "' class='btn btn-warning btn-sm'>Editar</a> ";
+                            echo "<a href='../admin/remover.php?ra=" . $row['ra'] . "' class='btn btn-danger btn-sm'>Excluir</a>";
+                        echo "</td>";
+                    }
                     echo "</tr>";
                 }
                 echo "</tbody></table>";

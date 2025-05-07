@@ -4,7 +4,12 @@ include_once '../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../public/login.php');
+    exit;
+}
+
+if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -28,7 +33,7 @@ if (isset($_GET['id'])) {
         $sql = "UPDATE curso SET nome = '$nome' WHERE id = '$id'";
 
         if (mysqli_query($conn, $sql)) {
-            header('Location: cursos.php');
+            header('Location: ../public/cursos.php');
             exit;
         } else {
             echo "Erro ao editar curso: " . mysqli_error($conn);
