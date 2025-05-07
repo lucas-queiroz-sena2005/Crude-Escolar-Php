@@ -1,15 +1,13 @@
 <?php
+
+include_once 'config/config.php';
+
 session_start();
 if (!isset($_SESSION['usuario'])) {
     header('Location: login.php');
     exit;
 }
 
-// Dados fictícios para exemplo de alunos
-$alunos = [
-    ['ra' => '12345', 'nome' => 'João Silva', 'data_nascimento' => '2000-01-01', 'cpf' => '123.456.789-00'],
-    ['ra' => '67890', 'nome' => 'Maria Oliveira', 'data_nascimento' => '1998-03-25', 'cpf' => '987.654.321-00']
-];
 ?>
 
 <!DOCTYPE html>
@@ -22,33 +20,38 @@ $alunos = [
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Área Administrativa</h2>
+        <h2>Alunos Cadastrados</h2>
         <a href="logout.php" class="btn btn-danger mb-3">Sair</a>
-        <a href="cadastro.php" class="btn btn-success mb-3">Cadastrar Novo Aluno</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>RA</th>
-                    <th>Nome</th>
-                    <th>Data de Nascimento</th>
-                    <th>CPF</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($alunos as $aluno) : ?>
-                    <tr>
-                        <td><?php echo $aluno['ra']; ?></td>
-                        <td><?php echo $aluno['nome']; ?></td>
-                        <td><?php echo $aluno['data_nascimento']; ?></td>
-                        <td><?php echo $aluno['cpf']; ?></td>
-                        <td>
-                            <a href="editar.php?ra=<?php echo $aluno['ra']; ?>" class="btn btn-warning">Editar</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+
+        <?php 
+            if($_SESSION['admin'] == true) {
+                echo "<a href='admin/admin.php' class='btn btn-primary mb-3'>Área Administrativa</a>";
+            }
+        ?>
+    
+        <?php 
+            // Mostra lista de alunos cadastrados
+            $sql = "SELECT * FROM aluno";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result) > 0) {
+                echo "<table class='table mt-3'>";
+                echo "<thead><tr><th>RA</th><th>CPF</th><th>Nome</th><th>Email</th><th>Data de Nascimento</th><th>Curso</th></tr></thead>";
+                echo "<tbody>";
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $row['ra'] . "</td>";
+                    echo "<td>" . $row['cpf'] . "</td>";
+                    echo "<td>" . $row['nome'] . "</td>";
+                    echo "<td>" . $row['email'] . "</td>";
+                    echo "<td>" . $row['data_nascimento'] . "</td>";
+                    echo "<td>" . $row['curso'] . "</td>";
+                    echo "</tr>";
+                }
+                echo "</tbody></table>";
+            } else {
+                echo "Nenhum aluno cadastrado.";
+            }    
+        ?>
     </div>
 </body>
 </html>
