@@ -28,7 +28,9 @@ if (!isset($_SESSION['usuario'])) {
                 echo "<a href='../admin/admin.php' class='btn btn-primary mb-3'>Área Administrativa</a>";
             }
         ?>
-    
+
+        <a href="cursos.php" class="btn btn-primary mb-3">Ver Cursos</a>
+
         <?php 
             // Mostra lista de alunos cadastrados
             $sql = "SELECT * FROM aluno";
@@ -45,6 +47,10 @@ if (!isset($_SESSION['usuario'])) {
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['data_nascimento'] . "</td>";
                     echo "<td>" . $row['curso'] . "</td>";
+                    echo "<td>";
+                    echo "<a href='editar.php?ra=" . $row['ra'] . "' class='btn btn-warning btn-sm'>Editar</a> ";
+                    echo "<a href='remover.php?ra=" . $row['ra'] . "' class='btn btn-danger btn-sm'>Excluir</a>";
+                    echo "</td>";
                     echo "</tr>";
                 }
                 echo "</tbody></table>";

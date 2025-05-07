@@ -28,8 +28,8 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
         <h2>Bem-vindo à Área Administrativa</h2>
         <a href="../public/index.php" class="btn btn-primary">Lista de alunos</a>
         <a href="cadastro.php" class="btn btn-success">Cadastrar novo aluno</a>
-        <a href="" class="btn btn-warning">Alterar registro de alunos</a>
-        <a href="" class="btn btn-danger">Deletar registro de alunos</a>
+        <a href="../public/cursos.php" class="btn btn-primary">Lista de cursos</a>
+        <a href="cadastro_curso.php" class="btn btn-success">Cadastrar novo curso</a>
         
     </div>
 </body>

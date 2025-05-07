@@ -13,26 +13,37 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
     exit;
 }
 
-//falta implementar 
-
-// Dados fictícios para edição (no futuro, você pode buscar os dados no banco)
-$aluno = [
-    'ra' => '12345',
-    'nome' => 'João Silva',
-    'data_nascimento' => '2000-01-01',
-    'cpf' => '123.456.789-00'
-];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Atualizar os dados (simulação)
-    $aluno['nome'] = $_POST['nome'];
-    $aluno['data_nascimento'] = $_POST['data_nascimento'];
-    $aluno['cpf'] = $_POST['cpf'];
-
-    // Redirecionar após edição
-    header('Location: index.php');
+if (!isset($_GET['ra'])) {
+    echo "Aluno não encontrado!";
     exit;
 }
+
+$ra = $_GET['ra'];
+$sql = "SELECT * FROM aluno WHERE ra = '$ra'";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 0) {
+    echo "Aluno não encontrado!";
+    exit;
+}
+
+$aluno = mysqli_fetch_assoc($result);
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'];
+    $data_nascimento = $_POST['data_nascimento'];
+    $cpf = $_POST['cpf'];
+
+    $sql = "UPDATE aluno SET nome = '$nome', data_nascimento = '$data_nascimento', cpf = '$cpf' WHERE ra = '$ra'";
+
+    if (mysqli_query($conn, $sql)) {
+        header('Location: index.php');
+        exit;
+    } else {
+        echo "Erro ao atualizar: " . mysqli_error($conn);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
