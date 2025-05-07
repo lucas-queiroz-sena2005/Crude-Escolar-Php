@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Redirecionar após cadastro
-    header('Location: ../../public/index.php');
+    header('Location: ../public/index.php');
     exit(); 
 
 } 
