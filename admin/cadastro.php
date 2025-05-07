@@ -1,10 +1,15 @@
 <?php
 
-include_once 'config/config.php';
+include_once '../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../public/login.php');
+    exit;
+}
+
+if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
+    header('Location: ../../public/index.php');
     exit;
 }
 
@@ -20,8 +25,10 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <div class="container mt-5">
+        
         <h2>Cadastrar Novo Aluno</h2>
-        <form method="POST" action="admin/create_student.php">
+        <a href="admin.php" class="btn btn-primary">Voltar</a>
+        <form method="POST" action="crud/create_student.php">
 
             <!-- RA -->
             <div class="mb-3">

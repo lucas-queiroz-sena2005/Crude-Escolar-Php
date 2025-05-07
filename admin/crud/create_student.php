@@ -1,15 +1,15 @@
 <?php 
 
-include_once '../config/config.php';
+include_once '../../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../login.php');
+    header('Location: ../../public/login.php');
     exit;
 }
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
-    header('Location: ../index.php');
+    header('Location: ../../public/index.php');
     exit;
 }
 
@@ -31,12 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Redirecionar após cadastro
-    header('Location: ../index.php');
+    header('Location: ../../public/index.php');
     exit(); 
 
 } else {
 
-    header('Location: cadastro.php');
+    header('Location: ../cadastro.php');
     exit();
 
 }

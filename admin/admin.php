@@ -4,12 +4,12 @@ include_once '../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../login.php');
+    header('Location: ../public/login.php');
     exit;
 }
 
 if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
-    header('Location: ../index.php');
+    header('Location: ../public/index.php');
     exit;
 }
 
@@ -26,8 +26,8 @@ if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
 <body>
     <div class="container mt-5">
         <h2>Bem-vindo à Área Administrativa</h2>
-        <a href="../index.php" class="btn btn-primary">Lista de alunos</a>
-        <a href="../cadastro.php" class="btn btn-success">Cadastrar novo aluno</a>
+        <a href="../public/index.php" class="btn btn-primary">Lista de alunos</a>
+        <a href="cadastro.php" class="btn btn-success">Cadastrar novo aluno</a>
         <a href="" class="btn btn-warning">Alterar registro de alunos</a>
         <a href="" class="btn btn-danger">Deletar registro de alunos</a>
         

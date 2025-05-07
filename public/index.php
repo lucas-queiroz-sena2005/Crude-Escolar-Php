@@ -1,6 +1,6 @@
 <?php
 
-include_once 'config/config.php';
+include_once '../config/config.php';
 
 session_start();
 if (!isset($_SESSION['usuario'])) {
@@ -25,7 +25,7 @@ if (!isset($_SESSION['usuario'])) {
 
         <?php 
             if($_SESSION['admin'] == true) {
-                echo "<a href='admin/admin.php' class='btn btn-primary mb-3'>Área Administrativa</a>";
+                echo "<a href='../admin/admin.php' class='btn btn-primary mb-3'>Área Administrativa</a>";
             }
         ?>
     
