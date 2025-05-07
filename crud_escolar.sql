@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 07/05/2025 às 21:16
+-- Tempo de geração: 08/05/2025 às 01:29
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -18,45 +18,47 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `crud_escolar`
+-- Banco de dados: `crud-escolar`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `alunos`
+-- Estrutura para tabela `aluno`
 --
 
-CREATE TABLE `alunos` (
-  `ra` int(11) NOT NULL,
+CREATE TABLE `aluno` (
+  `id` int(11) NOT NULL,
+  `ra` varchar(100) NOT NULL,
+  `cpf` varchar(100) NOT NULL,
   `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `data_nascimento` date NOT NULL,
-  `cpf` char(11) NOT NULL,
-  `eh_admin` tinyint(1) DEFAULT 0
+  `curso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cursos`
+-- Estrutura para tabela `curso`
 --
 
-CREATE TABLE `cursos` (
+CREATE TABLE `curso` (
   `id_curso` int(11) NOT NULL,
-  `nome_curso` varchar(100) NOT NULL
+  `nome` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `matriculas`
+-- Estrutura para tabela `usuario`
 --
 
-CREATE TABLE `matriculas` (
-  `id_matricula` int(11) NOT NULL,
-  `ra_aluno` int(11) NOT NULL,
-  `id_curso` int(11) NOT NULL,
-  `data_matricula` date DEFAULT curdate()
+CREATE TABLE `usuario` (
+  `id_adm` int(11) NOT NULL,
+  `administrador` tinyint(1) NOT NULL DEFAULT 0,
+  `username` varchar(100) NOT NULL,
+  `senha` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -64,53 +66,59 @@ CREATE TABLE `matriculas` (
 --
 
 --
--- Índices de tabela `alunos`
+-- Índices de tabela `aluno`
 --
-ALTER TABLE `alunos`
-  ADD PRIMARY KEY (`ra`),
-  ADD UNIQUE KEY `cpf` (`cpf`);
+ALTER TABLE `aluno`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ra` (`ra`),
+  ADD UNIQUE KEY `cpf` (`cpf`),
+  ADD KEY `fk_curso_aluno` (`curso_id`);
 
 --
--- Índices de tabela `cursos`
+-- Índices de tabela `curso`
 --
-ALTER TABLE `cursos`
+ALTER TABLE `curso`
   ADD PRIMARY KEY (`id_curso`),
-  ADD UNIQUE KEY `nome_curso` (`nome_curso`);
+  ADD UNIQUE KEY `nome` (`nome`);
 
 --
--- Índices de tabela `matriculas`
+-- Índices de tabela `usuario`
 --
-ALTER TABLE `matriculas`
-  ADD PRIMARY KEY (`id_matricula`),
-  ADD UNIQUE KEY `uc_matricula` (`ra_aluno`,`id_curso`),
-  ADD KEY `fk_curso` (`id_curso`);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id_adm`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT de tabela `cursos`
+-- AUTO_INCREMENT de tabela `aluno`
 --
-ALTER TABLE `cursos`
+ALTER TABLE `aluno`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `curso`
+--
+ALTER TABLE `curso`
   MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `matriculas`
+-- AUTO_INCREMENT de tabela `usuario`
 --
-ALTER TABLE `matriculas`
-  MODIFY `id_matricula` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `usuario`
+  MODIFY `id_adm` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para tabelas despejadas
 --
 
 --
--- Restrições para tabelas `matriculas`
+-- Restrições para tabelas `aluno`
 --
-ALTER TABLE `matriculas`
-  ADD CONSTRAINT `fk_aluno` FOREIGN KEY (`ra_aluno`) REFERENCES `alunos` (`ra`),
-  ADD CONSTRAINT `fk_curso` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id_curso`) ON DELETE CASCADE;
+ALTER TABLE `aluno`
+  ADD CONSTRAINT `fk_curso_aluno` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id_curso`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
