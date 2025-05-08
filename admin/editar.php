@@ -1,28 +1,50 @@
 <?php
+
+include_once '../config/config.php';
+
 session_start();
 if (!isset($_SESSION['usuario'])) {
-    header('Location: login.php');
+    header('Location: ../public/login.php');
     exit;
 }
 
-// Dados fictícios para edição (no futuro, você pode buscar os dados no banco)
-$aluno = [
-    'ra' => '12345',
-    'nome' => 'João Silva',
-    'data_nascimento' => '2000-01-01',
-    'cpf' => '123.456.789-00'
-];
+if(!isset($_SESSION['admin']) || $_SESSION['admin'] != true) {
+    header('Location: ../public/index.php');
+    exit;
+}
+
+if (!isset($_GET['ra'])) {
+    echo "Aluno não encontrado!";
+    exit;
+}
+
+$ra = $_GET['ra'];
+$sql = "SELECT * FROM aluno WHERE ra = '$ra'";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) == 0) {
+    echo "Aluno não encontrado!";
+    exit;
+}
+
+$aluno = mysqli_fetch_assoc($result);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Atualizar os dados (simulação)
-    $aluno['nome'] = $_POST['nome'];
-    $aluno['data_nascimento'] = $_POST['data_nascimento'];
-    $aluno['cpf'] = $_POST['cpf'];
+    $nome = $_POST['nome'];
+    $data_nascimento = $_POST['data_nascimento'];
+    $cpf = $_POST['cpf'];
 
-    // Redirecionar após edição
-    header('Location: index.php');
-    exit;
+    $sql = "UPDATE aluno SET nome = '$nome', data_nascimento = '$data_nascimento', cpf = '$cpf' WHERE ra = '$ra'";
+
+    if (mysqli_query($conn, $sql)) {
+        header('Location: ../public/index.php?msg=Aluno alterado com sucesso!');
+        exit;
+    } else {
+        header('Location: ../public/index.php?msg=Erro ao alterar aluno!');
+        exit;
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -33,8 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Editar Aluno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <h2>Editar Aluno</h2>
         <form method="POST">
             <div class="mb-3">
@@ -55,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-warning">Salvar</button>
         </form>
-    </div>
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>
