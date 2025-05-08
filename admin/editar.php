@@ -55,8 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Editar Aluno</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <h2>Editar Aluno</h2>
         <form method="POST">
             <div class="mb-3">
@@ -77,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-warning">Salvar</button>
         </form>
-    </div>
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>

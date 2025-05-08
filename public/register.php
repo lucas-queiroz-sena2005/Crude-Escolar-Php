@@ -37,8 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <h2>Criar Conta</h2>
         <?php if (isset($erro)) { echo "<div class='alert alert-danger'>$erro</div>"; } ?>
         <form method="POST">
@@ -52,8 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-primary">Criar</button>
         </form>
-        <br>
-        <a href="login.php">Possui uma conta? Entre aqui!</a>
-    </div>
+
+        <div class="mt-4">
+            <a href="login.php">Possui uma conta? Entre aqui!</a>
+        </div>
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>

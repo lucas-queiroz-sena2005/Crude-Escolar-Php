@@ -18,23 +18,23 @@ if (!isset($_SESSION['usuario'])) {
     <title>Lista de Cursos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <?php
             if (isset($_GET['msg'])) {
                 $msg = htmlspecialchars($_GET['msg']); 
                 echo "<div class='alert alert-warning'>$msg</div>"; 
             }
         ?>
-        <h2>Cursos Cadastrados</h2>
 
-        <?php
-            if($_SESSION['admin'] == true) {
-                echo '<a href="../admin/cadastro_curso.php" class="btn btn-success mb-3">Cadastrar Novo Curso</a>';
-            }
-        ?>
-        
-        <a href="index.php" class="btn btn-primary mb-3">Voltar para Alunos</a>
+        <h2>Cursos Cadastrados</h2>
 
         <?php
             $sql = "SELECT * FROM curso";
@@ -60,6 +60,23 @@ if (!isset($_SESSION['usuario'])) {
                 echo "<br> Nenhum curso cadastrado.";
             }
         ?>
-    </div>
+
+        <!-- Mover botão para abaixo da tabela -->
+        <?php
+            if($_SESSION['admin'] == true) {
+                echo '<a href="../admin/cadastro_curso.php" class="btn btn-success mb-3">Cadastrar Novo Curso</a>';
+            }
+        ?>
+
+        <div class="mt-4">
+            <a href="index.php" class="btn btn-primary mb-3">Voltar para Alunos</a>
+        </div>
+
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>

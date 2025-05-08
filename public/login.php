@@ -21,13 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
         $_SESSION['usuario'] = $user['username'];
-        
-        if ($user['administrador'] == 1) {
-            $_SESSION['admin'] = true;
-        } else {
-            $_SESSION['admin'] = false;
-        }
-
+        $_SESSION['admin'] = ($user['administrador'] == 1);
         header('Location: index.php');
         exit;
     } else {
@@ -47,10 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <h2>Login</h2>
         <?php if (isset($erro)) { echo "<div class='alert alert-danger'>$erro</div>"; } ?>
+        
         <form method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Usuário</label>
@@ -62,8 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
-        <br>
-        <a href="register.php">Não possui uma conta? Registre-se aqui!</a>
-    </div>
+
+        <div class="mt-4">
+            <a href="register.php">Não possui uma conta? Registre-se aqui!</a>
+        </div>
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>

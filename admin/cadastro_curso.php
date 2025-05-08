@@ -37,10 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Cadastrar Curso</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="d-flex flex-column min-vh-100">
+
+    <header class="bg-secondary text-white p-3">
+        <div class="container">
+            <h1 class="h4">Sistema Acadêmico</h1>
+        </div>
+    </header>
+
+    <main class="container flex-fill my-4">
         <h2>Cadastrar Novo Curso</h2>
-        <a href="../public/cursos.php" class="btn btn-primary">Voltar</a>
         <form method="POST">
             <div class="mb-3">
                 <label for="nome" class="form-label">Nome do Curso</label>
@@ -48,6 +54,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-success">Cadastrar</button>
         </form>
-    </div>
+
+        <div class="mt-3">
+            <a href="../public/cursos.php" class="btn btn-primary">Voltar</a>
+        </div>
+    </main>
+
+    <footer class="bg-secondary text-white text-center p-3 mt-auto">
+        <small>&copy; <?php echo date("Y"); ?> Sistema Acadêmico</small>
+    </footer>
+
 </body>
 </html>
