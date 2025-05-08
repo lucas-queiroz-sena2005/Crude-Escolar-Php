@@ -3,6 +3,7 @@
 include_once '../config/config.php';
 
 session_start();
+
 if (!isset($_SESSION['usuario'])) {
     header('Location: ../public/login.php');
     exit;
@@ -19,13 +20,15 @@ if (isset($_GET['ra'])) {
     $sql = "DELETE FROM aluno WHERE ra = '$ra'";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: ../public/index.php'); 
+        header('Location: ../public/index.php?msg=Aluno excluído com sucesso'); 
         exit;
     } else {
-        echo "Erro ao excluir aluno: " . mysqli_error($conn);
+        header('Location: ../public/index.php?msg=Erro ao excluir aluno!');
+        exit; 
     }
 } else {
-    echo "Aluno não encontrado!";
+    header('Location: ../public/index.php?msg=Aluno não encontrado!'); 
+    exit;
 }
 
 ?>

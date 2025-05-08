@@ -20,6 +20,12 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <div class="container mt-5">
+        <?php
+            if (isset($_GET['msg'])) {
+                $msg = htmlspecialchars($_GET['msg']); 
+                echo "<div class='alert alert-warning'>$msg</div>"; 
+            }
+        ?>
         <h2>Cursos Cadastrados</h2>
 
         <?php
@@ -51,7 +57,7 @@ if (!isset($_SESSION['usuario'])) {
                 }
                 echo "</tbody></table>";
             } else {
-                echo "Nenhum curso cadastrado.";
+                echo "<br> Nenhum curso cadastrado.";
             }
         ?>
     </div>

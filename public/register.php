@@ -23,9 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $erro = "Erro ao criar conta!";
     }
 
-    // Redirecionar após cadastro
     header('Location: ../public/login.php');
-    exit(); 
+    exit;
 } 
 
 ?>
@@ -53,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <button type="submit" class="btn btn-primary">Criar</button>
         </form>
+        <br>
+        <a href="login.php">Possui uma conta? Entre aqui!</a>
     </div>
 </body>
 </html>

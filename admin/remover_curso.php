@@ -21,9 +21,12 @@ if (isset($_GET['id'])) {
     
     if (mysqli_stmt_execute($stmt)) {
         header('Location: ../public/cursos.php?msg=Curso excluído com sucesso');
+        exit;
     } else {
         header('Location: ../public/cursos.php?msg=Erro ao excluir o curso');
+        exit;
     }
 } else {
     header('Location: ../public/cursos.php?msg=Curso não encontrado');
+    exit;
 }

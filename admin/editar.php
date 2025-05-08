@@ -37,10 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "UPDATE aluno SET nome = '$nome', data_nascimento = '$data_nascimento', cpf = '$cpf' WHERE ra = '$ra'";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: ../public/index.php');
+        header('Location: ../public/index.php?msg=Aluno alterado com sucesso!');
         exit;
     } else {
-        echo "Erro ao atualizar: " . mysqli_error($conn);
+        header('Location: ../public/index.php?msg=Erro ao alterar aluno!');
+        exit;
     }
 }
 

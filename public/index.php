@@ -20,6 +20,12 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 <body>
     <div class="container mt-5">
+        <?php
+            if (isset($_GET['msg'])) {
+                $msg = htmlspecialchars($_GET['msg']); 
+                echo "<div class='alert alert-warning'>$msg</div>"; 
+            }
+        ?>
         <h2>Alunos Cadastrados</h2>
         <a href="logout.php" class="btn btn-danger mb-3">Sair</a>
 
@@ -32,8 +38,8 @@ if (!isset($_SESSION['usuario'])) {
         <a href="cursos.php" class="btn btn-primary mb-3">Ver Cursos</a>
 
         <?php 
-            // Mostra lista de alunos cadastrados
-            $sql = "SELECT * FROM aluno";
+            $sql = "SELECT aluno.*, curso.nome AS curso_nome FROM aluno
+        LEFT JOIN curso ON aluno.curso_id = curso.id";
             $result = mysqli_query($conn, $sql);
             if (mysqli_num_rows($result) > 0) {
                 echo "<table class='table mt-3'>";
@@ -46,7 +52,7 @@ if (!isset($_SESSION['usuario'])) {
                     echo "<td>" . $row['nome'] . "</td>";
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['data_nascimento'] . "</td>";
-                    echo "<td>" . $row['curso'] . "</td>";
+                    echo "<td>" . $row['curso_nome'] . "</td>";
                     if($_SESSION['admin'] == true) {
                         echo "<td>";
                             echo "<a href='../admin/editar.php?ra=" . $row['ra'] . "' class='btn btn-warning btn-sm'>Editar</a> ";
@@ -57,7 +63,7 @@ if (!isset($_SESSION['usuario'])) {
                 }
                 echo "</tbody></table>";
             } else {
-                echo "Nenhum aluno cadastrado.";
+                echo "<br> Nenhum aluno cadastrado.";
             }    
         ?>
     </div>

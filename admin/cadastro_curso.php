@@ -19,10 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO curso (nome) VALUES ('$nome')";
 
     if (mysqli_query($conn, $sql)) {
-        header('Location: ../public/cursos.php');
+        header('Location: ../public/cursos.php?msg=Curso cadastrado!');
         exit;
     } else {
-        echo "Erro ao cadastrar curso: " . mysqli_error($conn);
+        header('Location: ../public/cursos.php?msg=Erro ao cadastrar!');
+        exit;
     }
 }
 

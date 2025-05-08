@@ -22,17 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data_nascimento = $_POST['data_nascimento'];
     $curso = $_POST['curso'];
 
-    $sql = "INSERT INTO aluno (ra, cpf, nome, email, data_nascimento, curso) VALUES ('$ra', '$cpf', '$nome', '$email', '$data_nascimento', '$curso')";
+    $sql = "INSERT INTO aluno (ra, cpf, nome, email, data_nascimento, curso_id) VALUES ('$ra', '$cpf', '$nome', '$email', '$data_nascimento', '$curso')";
 
     if (mysqli_query($conn, $sql)) {
-        echo "Cadastro realizado com sucesso!";
+        header('Location: ../public/index.php?msg=Aluno cadastrado com sucesso!');
+        exit; 
     } else {
-        echo "Erro: " . mysqli_error($conn);
+        header('Location: ../public/index.php?msg=Erro ao cadastrar aluno!');
+        exit;
     }
-
-    // Redirecionar após cadastro
-    header('Location: ../public/index.php');
-    exit(); 
 
 } 
 
@@ -86,7 +84,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Curso -->
             <div class="mb-3">
                 <label for="curso" class="form-label">Curso Matriculado</label>
-                <input type="curso" name="curso" class="form-control" required>
+                <select name="curso" id="curso">
+                    <?php
+                        $query = "SELECT * FROM curso";
+                        $result = mysqli_query($conn, $query);
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "<option value='" . $row['id'] . "'>" . $row['nome'] . "</option>";
+                            }
+                        }
+                    ?>
+                </select>
             </div>
 
             <button type="submit" class="btn btn-success">Cadastrar</button>

@@ -61,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" name="senha" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
-            <br>
-            <a href="register.php">Não possui uma conta? Registre-se aqui!</a>
         </form>
+        <br>
+        <a href="register.php">Não possui uma conta? Registre-se aqui!</a>
     </div>
 </body>
 </html>

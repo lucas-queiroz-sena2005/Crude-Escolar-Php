@@ -33,14 +33,15 @@ if (isset($_GET['id'])) {
         $sql = "UPDATE curso SET nome = '$nome' WHERE id = '$id'";
 
         if (mysqli_query($conn, $sql)) {
-            header('Location: ../public/cursos.php');
+            header('Location: ../public/cursos.php?msg=Curso alterado com sucesso!');
             exit;
         } else {
-            echo "Erro ao editar curso: " . mysqli_error($conn);
+            header('Location: ../public/cursos.php?msg=Erro ao alterar curso!');
+            exit;
         }
     }
 } else {
-    echo "ID do curso não encontrado!";
+    header('Location: ../public/cursos.php?msg=Curso não encontrado!');
     exit;
 }
 

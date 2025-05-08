@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08/05/2025 às 00:16
+-- Tempo de geração: 08/05/2025 às 15:47
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -34,15 +34,16 @@ CREATE TABLE `aluno` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `data_nascimento` date NOT NULL,
-  `curso` varchar(100) NOT NULL
+  `curso_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `aluno`
 --
 
-INSERT INTO `aluno` (`id`, `ra`, `cpf`, `nome`, `email`, `data_nascimento`, `curso`) VALUES
-(5, '214242', '423421421', 'Pedro Rodrigues de Oliveira', 'pedro@hotmail.com', '2000-04-23', 'Análise e Desenvolvimento de Sistemas');
+INSERT INTO `aluno` (`id`, `ra`, `cpf`, `nome`, `email`, `data_nascimento`, `curso_id`) VALUES
+(7, '123456789', '12456723976', 'Jose Silva', 'jose@hotmail.com', '2000-02-11', 10),
+(8, '87638757592', '75869274851', 'Pedro Augusto', 'pedro@hotmail.com', '2006-04-18', 10);
 
 -- --------------------------------------------------------
 
@@ -60,8 +61,10 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`id`, `nome`) VALUES
-(1, 'Análise e Desenvolvimento de Sistemas'),
-(2, 'Filosofia');
+(10, 'Análise e Desenvolvimento de Sistemas'),
+(11, 'Filosofia'),
+(13, 'Gestão da Tecnologia da Informação'),
+(12, 'Processos Químicos');
 
 -- --------------------------------------------------------
 
@@ -92,19 +95,24 @@ INSERT INTO `usuario` (`id`, `administrador`, `username`, `senha`) VALUES
 -- Índices de tabela `aluno`
 --
 ALTER TABLE `aluno`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ra` (`ra`),
+  ADD UNIQUE KEY `cpf` (`cpf`),
+  ADD KEY `fk_curso_aluno` (`curso_id`);
 
 --
 -- Índices de tabela `curso`
 --
 ALTER TABLE `curso`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `nome` (`nome`);
 
 --
 -- Índices de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -114,19 +122,29 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `aluno`
 --
 ALTER TABLE `aluno`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `aluno`
+--
+ALTER TABLE `aluno`
+  ADD CONSTRAINT `fk_curso_aluno` FOREIGN KEY (`curso_id`) REFERENCES `curso` (`id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
